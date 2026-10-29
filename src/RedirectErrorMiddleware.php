@@ -20,6 +20,7 @@ class RedirectErrorMiddleware implements MiddlewareInterface
         if (str_starts_with($path, '/api') || str_starts_with($path, '/admin')) {
             return $handler->handle($request);
         }
+
         if ($path === parse_url(self::TARGET, PHP_URL_PATH)) {
             return $handler->handle($request);
         }
@@ -29,8 +30,10 @@ class RedirectErrorMiddleware implements MiddlewareInterface
         } catch (RouteNotFoundException $e) {
             return new RedirectResponse(self::TARGET, 302);
         }
+
         $status = $response->getStatusCode();
-        if ($status >= 400 && $status < 600) {
+
+        if ($status === 404 || ($status >= 500 && $status < 600)) {
             return new RedirectResponse(self::TARGET, 302);
         }
 
