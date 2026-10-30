@@ -20,6 +20,9 @@ class RedirectErrorMiddleware implements MiddlewareInterface
         if (str_starts_with($path, '/api')
             || str_starts_with($path, '/admin')
             || str_starts_with($path, '/auth')
+            || str_starts_with($path, '/microsoft-oauth')
+            || str_starts_with($path, '/github-oauth')
+            || str_starts_with($path, '/blessing-oauth')
         ) {
             return $handler->handle($request);
         }
