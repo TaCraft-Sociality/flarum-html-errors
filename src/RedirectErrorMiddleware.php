@@ -17,7 +17,10 @@ class RedirectErrorMiddleware implements MiddlewareInterface
     {
         $path = $request->getUri()->getPath();
 
-        if (str_starts_with($path, '/api') || str_starts_with($path, '/admin')) {
+        if (str_starts_with($path, '/api')
+            || str_starts_with($path, '/admin')
+            || str_starts_with($path, '/auth')
+        ) {
             return $handler->handle($request);
         }
 
